@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -57,6 +58,13 @@ public class Main {
             e.printStackTrace();
         }
 
+        // Написать консольное приложение, которое умеет постранично читать текстовые файлы
+        Scanner keyboard = new Scanner(System.in);
+        System.out.println("Enter page number: ");
+        int page = keyboard.nextInt();
+
+        Reader reader = new Reader("files/war-and-peace.txt", 1800);
+        System.out.println(reader.getPage(page));
 
 
     }
