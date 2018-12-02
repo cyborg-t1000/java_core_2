@@ -10,22 +10,23 @@ public class PrintLetter {
 
     public static void main(String[] args) {
         PrintLetter pl = new PrintLetter();
-        Thread t1 = new Thread(() -> pl.printOne('A'));
-        Thread t2 = new Thread(() -> pl.printOne('B'));
-        Thread t3 = new Thread(() -> pl.printOne('C'));
-        t1.start();
-        t2.start();
-        t3.start();
+        byte ascii = 65;
+        for (int i = 0; i < 3; i++) {
+            byte finalAscii = ascii;
+            Thread t = new Thread(() -> pl.printOne(finalAscii));
+            t.start();
+            ascii++;
+        }
     }
 
-    private void printOne(char letter) {
+    private void printOne(byte letter) {
         synchronized (mon) {
             try {
                 for (int i = 0; i < 5; i++) {
-                    while (this.asciiCurrent != (byte)letter) {
+                    while (this.asciiCurrent != letter) {
                         mon.wait();
                     }
-                    System.out.println(letter);
+                    System.out.println((char)letter);
                     if(++this.asciiCurrent > 67) this.asciiCurrent = 65;
                     mon.notifyAll();
                 }
